@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSUITE - Sistema de Análisis de Gerencial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+            background-color: #f8f9fa;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .tech-stack {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tech-stack h4 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .tech-list {
+            list-style: none;
+        }
+
+        .tech-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+            font-weight: 500;
+        }
+
+        .tech-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.enterprise {
+            border: 3px solid #667eea;
+            position: relative;
+        }
+
+        .pricing-card.enterprise::before {
+            content: "RECOMENDADO";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .pricing-card h4 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 2.2em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            font-size: 0.95em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .sync-info {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>INSUITE</h1>
+            <p>Sistema de Analisis de Datos Gerenciales</p>
+        </div>
+
+        <div class="section">
+            <h2>Resumen Ejecutivo</h2>
+            <p>Insuite es una solución empresarial innovadora que revoluciona la forma en que las organizaciones interactúan con sus datos de ERP. Mediante inteligencia artificial conversacional, permite a los usuarios realizar consultas complejas en lenguaje natural, eliminando la necesidad de conocimientos técnicos en bases de datos o análisis de datos tradicionales.</p>
+            
+            <div class="highlight">
+                <strong>Valor Propuesta:</strong> Democratizar el acceso a la información empresarial mediante interfaces conversacionales inteligentes que transforman preguntas en lenguaje natural en consultas estructuradas de base de datos.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Arquitectura Tecnológica</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-stack">
+                    <h4>Backend de Análisis</h4>
+                    <ul class="tech-list">
+                        <li>Python 3.11</li>
+                        <li>Google BigQuery</li>
+                        <li>API REST</li>
+                        <li>Microservicios</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <h4>Frontend e Interfaz</h4>
+                    <ul class="tech-list">
+                        <li>Laravel Framework</li>
+                        <li>PHP 8.x</li>
+                        <li>PostgreSQL</li>
+                        <li>HTML5 & CSS3</li>
+                        <li>Tailwind CSS</li>
+                        <li>JavaScript ES6+</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Infraestructura de Datos</h3>
+            <div class="sync-info">
+                <strong>Data Warehouse:</strong> Sistema de sincronización automatizada que actualiza la información empresarial diariamente a las 23:00 hrs, garantizando consistencia y disponibilidad de datos con un desfase máximo de 24 horas.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Funcionalidades del Sistema</h2>
+            
+            <h3>Agentes Especializados</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Agente de Ventas</h4>
+                    <p>Análisis de documentos, tendencias de ventas, comparativos por período y segmentación de clientes, vendedores y productos .</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Agente de Cuentas por Cobrar</h4>
+                    <p>Gestión de cartera, análisis de documentos en morosidad y seguimiento de cobranza.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Agente de Cuentas por Pagar</h4>
+                    <p>Control de obligaciones, consulas de fechas de pago, análisis de proveedores y optimización de cash flow.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Agente de Inventarios</h4>
+                    <p>Control de stock, rotación de productos, análisis ABC, alertas de reabastecimiento y valorización.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Agente de Nómina</h4>
+                    <p>Análisis de estructura salarial, indicadores de RRHH y reportes de datos de personal.</p>
+                </div>
+            </div>
+
+            <h3>Capacidades de Análisis</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Consultas Simples</h4>
+                    <p>Extracción de datos específicos, listados filtrados y consultas puntuales de información.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Análisis Avanzado</h4>
+                    <p>Generación de matrices comparativas, análisis de tendencias, correlaciones y métricas de desempeño.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Visualización (Beta)</h4>
+                    <p>Generación automática de gráficos, dashboards dinámicos y representaciones visuales de datos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Dashboards de Indicadores Prediseñados</h2>
+            
+            <p>Insuite incluye acceso a dashboards con indicadores prediseñados para cada módulo empresarial, alimentados directamente desde el data warehouse. Estos dashboards permiten evaluar aspectos específicos y definidos de la información del sistema, proporcionando una visión integral y actualizada del desempeño organizacional.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Dashboard de Cuentas por Cobrar</h4>
+                    <p>Indicadores de cartera, antigüedad de saldos, índices de morosidad y proyecciones de cobranza.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Dashboard de Cuentas por Pagar</h4>
+                    <p>Control de obligaciones, cronogramas de vencimiento, análisis de proveedores y flujo de pagos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Dashboard de Ventas</h4>
+                    <p>Métricas de rendimiento comercial, análisis de tendencias, comparativos por período y segmentación.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Dashboard de Inventarios</h4>
+                    <p>Detalle de movimients, consultas de stock, matrices de datos, etc..</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Dashboard de Gestión Humana</h4>
+                    <p>Métricas de recursos humanos, análisis de datos laborales y indicadores de costos.</p>
+                </div>
+            </div>
+
+            <div class="sync-info">
+                <strong>Desarrollo a Medida:</strong> Además de los dashboards prediseñados, ofrecemos el desarrollo de indicadores personalizados y dashboards específicos como servicio contratado por separado, adaptados a las necesidades particulares de su organización.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Interfaz de Usuario</h2>
+            
+            <h3>Características de la Interfaz</h3>
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li><strong>Diseño Responsivo:</strong> Compatible con dispositivos móviles, tablets y escritorio</li>
+                <li><strong>Chat Tradicional:</strong> Interfaz intuitiva similar a aplicaciones de mensajería</li>
+                <li><strong>Consultas Favoritas:</strong> Capacidad de guardar hasta 3 consultas frecuentes</li>
+                <li><strong>Historial:</strong> Acceso a las últimas 10 consultas realizadas</li>
+                <li><strong>Multi-empresa:</strong> Selector de empresa para usuarios con acceso múltiple</li>
+            </ul>
+
+            <h3>Control de Acceso</h3>
+            <p>Sistema de autenticación y autorización que permite a los usuarios acceder únicamente a las empresas para las cuales tienen permisos configurados, garantizando la seguridad y privacidad de la información.</p>
+        </div>
+
+        <div class="section">
+            <h2>Planes de Suscripción</h2>
+            
+            <div class="pricing-table">
+                <div class="pricing-card">
+                    <h4>Básico</h4>
+                    <div class="price">Q1,000</div>
+                    <ul class="pricing-features">
+                        <li>1 empresa</li>
+                        <li>1 usuario</li>
+                        <li>Hasta 500 consultas/mes</li>
+                        <li>Acceso a manuales y soporte via email (hasta 48 horas hábiles)</li>
+                        <li>Actualizaciones 'estables' incluidas</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing-card enterprise">
+                    <h4>Business</h4>
+                    <div class="price">Q2,500</div>
+                    <ul class="pricing-features">
+                        <li>Hasta 3 empresas</li>
+                        <li>Hasta 3 usuarios</li>
+                        <li>Hasta 2,500 consultas/mes</li>
+                        <li>Acceso a manuales y soporte prioritario (hasta 24 horas hábiles)</li>
+                        <li>Actualizaciones incluidas (todas)</li>
+                        <li>Reportes avanzados</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing-card">
+                    <h4>Enterprise</h4>
+                    <div class="price">Q4,000</div>
+                    <ul class="pricing-features">
+                        <li>Hasta 10 empresas</li>
+                        <li>Usuarios ilimitados</li>
+                        <li>Hasta 4,000 consultas/mes</li>
+                        <li>Acceso a manuales y soporte prioritario (hasta 8 horas hábiles)</li>
+                        <li>Actualizaciones incluidas (todas)</li>
+                        <li>Funciones beta</li>
+                        <li>Acceso a material exclusivo de formación</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Roadmap de Desarrollo</h2>
+            
+            <h3>Próximas Funcionalidades</h3>
+            <ul style="list-style-type: disc; margin-left: 20px;">
+                <li><strong>Memoria Conversacional:</strong> Implementación de contexto persistente para conversaciones extendidas y dinámicas</li>
+                <li><strong>Reportes Avanzados:</strong> Generacion de reportes avanzados desde la interfaz de chat</li>
+                <li><strong>Nuevos Dashboards:</strong> Integración de nuevos dashboards predefinidos</li>
+            </ul>
+
+            <p style="margin-top: 20px;"><strong>Compromiso de Mejora Continua:</strong> Los usuarios tendrán acceso automático a todas las actualizaciones y nuevas funcionalidades como parte de su suscripción activa.</p>
+        </div>
+
+        <div class="section">
+            <h2>Consideraciones Técnicas</h2>
+            
+            <div class="warning-box">
+                <h4>Limitaciones del Sistema</h4>
+                <p><strong>Independencia de Consultas:</strong> Actualmente, cada consulta se procesa de forma independiente sin memoria de conversaciones previas. Esta funcionalidad está planificada para futuras versiones.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>Precisión de IA Generativa</h4>
+                <p><strong>Factores de Variabilidad:</strong> Aunque los agentes han sido rigurosamente entrenados y probados, la naturaleza de la IA generativa puede ocasionar errores debido a ambigüedad en consultas, terminología desconocida o complejidad excesiva en las solicitudes. Se recomienda validar resultados críticos.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>Privacidad y Procesamiento de Datos</h4>
+                <p><strong>Servicios Enterprise LLM:</strong> El procesamiento de consultas utiliza servicios empresariales de Large Language Models (LLM) que cumplen con estándares de seguridad y privacidad empresarial para el manejo de información sensible.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Beneficios Empresariales</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Democratización de Datos</h4>
+                    <p>Elimina barreras técnicas permitiendo que los usuarios autorizados accedan a información empresarial compleja.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Reducción de Tiempos</h4>
+                    <p>Consultas que tradicionalmente requieren horas de análisis se resuelven en segundos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Toma de Decisiones Ágil</h4>
+                    <p>Acceso inmediato a información crítica para decisiones empresariales estratégicas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Escalabilidad</h4>
+                    <p>Arquitectura en la nube que crece con las necesidades de su organización.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Contacto e Implementación</h2>
+            <p>Insuite representa la evolución natural de la inteligencia empresarial, combinando la potencia de la inteligencia artificial con la simplicidad de una conversación natural. Nuestro equipo técnico está preparado para acompañar su organización en el proceso de implementación y adopción de esta innovadora herramienta.</p>
+            
+            <div class="highlight">
+                <strong>¿Listo para transformar la forma en que su empresa accede a la información?</strong><br>
+                Contáctenos para una demostración personalizada y descubra cómo Insuite puede optimizar la toma de decisiones en su organización.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
